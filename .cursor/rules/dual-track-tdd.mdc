@@ -1,0 +1,41 @@
+---
+description: Dual-Track TDD · C2C 추적 · ECB · Golden Master 작업 규칙
+globs:
+alwaysApply: true
+---
+ 
+# 작업 규칙 (항상 적용)
+
+- 사이클 순서는 RED → GREEN → REFACTOR. 건너뛰기 금지.
+- 가장 단순한 실패 테스트부터 쓰고, 통과시킬 최소 코드만 구현하고, 전부 통과한 뒤에만 리팩터링한다.
+ 
+## RED 규칙
+- tests/ 만 수정한다. src/ 는 건드리지 않는다.
+- Then 블록은 pytest.fail("RED: [Test ID] — 구현 없음, 의도적 실패") 한 줄만.
+- assert 본문·skip·xfail·통과 더미 금지.
+ 
+## GREEN 규칙
+- 실패 로그를 Context로 받아 "최소 구현"만 작성한다.
+- 구현 줄 끝에 충족한 계약 ID를 주석으로 단다: # INV-1
+- 시그니처 불변. 요청 외 기능 추가 금지.
+ 
+## REFACTOR 규칙
+- 전부 GREEN 상태에서만 진행한다.
+- 구조적 변경과 동작적 변경을 한 커밋에 섞지 않는다(구조 먼저).
+- 중복 제거·매직 넘버를 상수(SSOT)로 추출·이름 정리만.
+- 테스트를 수정·삭제·비활성화하거나 `assert True` / `pytest.skip` 으로 우회하지 않는다.
+- 정리 전후로 pytest -q 로 동작 불변 확인.
+- 정리할 게 없으면 "없음"이라 보고하고 변경하지 않는다.
+ 
+## ECB 규칙
+- Entity가 Boundary/Control을 import하는 순간 즉시 중단 후 보고.
+ 
+## 커밋 규칙
+- 구조적 변경과 동작적 변경을 한 커밋에 섞지 않는다(구조 먼저).
+- 메시지 형식: test(entity): D-LOC-01 RED [RED]
+
+## 커밋 분리
+- `test`(RED) → `feat`(GREEN) → `refactor`(구조). 커밋 메시지에 계약 ID를 적는다.
+ 
+## 작업 종료
+- 모든 작업 후 pytest -q 전체 통과를 확인하고 보고한다.
