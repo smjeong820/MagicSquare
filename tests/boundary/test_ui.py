@@ -31,6 +31,9 @@ def test_u_in_02_parse_grid_rejects_wrong_zero_count():
 @pytest.mark.boundary
 def test_u_in_03_parse_grid_rejects_out_of_range_values():
     # Given: -1 또는 17이 포함된 4×4 격자 (0 두 개)
-    # When: parse_grid 호출
-    # Then: ValueError 거부 (E-3)
-    pytest.fail("RED: U-IN-03 — 구현 없음, 의도적 실패")
+    with_neg = [[-1, 3, 2, 13], [5, 10, 0, 8], [9, 6, 7, 12], [4, 0, 14, 1]]
+    with_17 = [[17, 3, 2, 13], [5, 10, 0, 8], [9, 6, 7, 12], [4, 0, 14, 1]]
+    # When / Then: parse_grid → ValueError (E-3)
+    for raw in (with_neg, with_17):
+        with pytest.raises(ValueError):
+            parse_grid(raw)

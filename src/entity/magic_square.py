@@ -3,6 +3,13 @@ def validate_zero_count(grid: list[list[int]]) -> None:
         raise ValueError("grid must have exactly 2 zeros")  # E-2
 
 
+def validate_cell_values(grid: list[list[int]]) -> None:
+    for row in grid:
+        for v in row:
+            if not isinstance(v, int) or v < 0 or v > 16:
+                raise ValueError("cell values must be 0 or 1-16")  # E-3
+
+
 def validate_grid_shape(grid) -> None:
     if grid is None:
         raise ValueError("grid must be 4x4")  # E-1
