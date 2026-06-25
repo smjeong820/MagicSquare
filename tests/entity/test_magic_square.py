@@ -15,6 +15,14 @@ def test_d_msq_01_magic_constant_is_34():
 
 
 @pytest.mark.entity
+def test_d_msq_02_all_rows_sum_to_complete_grid(complete_grid):
+    # Given: 완성 4×4 마방진 격자, target=34
+    # When:  all_rows_sum_to(complete_grid, 34) 호출
+    # Then:  모든 행 합 == 34
+    pytest.fail("RED: D-MSQ-02 — 구현 없음, 의도적 실패")
+
+
+@pytest.mark.entity
 def test_d_msq_06_count_zeros_is_2(puzzle_grid):
     # Given: 빈 칸 2개인 4×4 퍼즐 격자
     # When:  count_zeros(puzzle_grid) 호출
