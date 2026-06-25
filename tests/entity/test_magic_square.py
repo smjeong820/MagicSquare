@@ -104,6 +104,12 @@ def test_d_msq_10_solved_grid_satisfies_inv_2_through_5(puzzle_grid):
 @pytest.mark.entity
 def test_d_msq_11_row_priority_when_row_and_col_both_single_zero():
     # Given: 행·열 모두 단일 0인 교차 빈 칸 퍼즐
+    grid = [
+        [16, 3, 2, 13],
+        [5, 10, 0, 8],
+        [9, 6, 7, 0],
+        [4, 15, 14, 1],
+    ]
     # When:  solve_blanks 호출
     # Then:  행 우선 — 첫 쌍 == (1, 2, 11)
-    pytest.fail("RED: D-MSQ-11 — 구현 없음, 의도적 실패")
+    assert solve_blanks(grid)[0] == (1, 2, 11)
