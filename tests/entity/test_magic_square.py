@@ -12,3 +12,11 @@ def test_d_msq_01_magic_constant_is_34():
     result = magic_constant(4)
     assert result == 34
     assert_matches_golden(str(result), "d_msq_01_magic_constant_n4.approved.txt")
+
+
+@pytest.mark.entity
+def test_d_msq_06_count_zeros_is_2(puzzle_grid):
+    # Given: 빈 칸 2개인 4×4 퍼즐 격자
+    # When:  count_zeros(puzzle_grid) 호출
+    # Then:  반환값 == 2
+    pytest.fail("RED: D-MSQ-06 — 구현 없음, 의도적 실패")
