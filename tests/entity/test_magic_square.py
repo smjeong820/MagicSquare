@@ -84,4 +84,4 @@ def test_d_msq_09_solve_blanks_first_pair_from_single_zero_row(puzzle_grid):
     # Given: 단일 0 행이 있는 퍼즐 격자
     # When:  solve_blanks(puzzle_grid) 호출
     # Then:  첫 쌍 == (1, 2, 11) — 행 우선 1칸 확정
-    pytest.fail("RED: D-MSQ-09 — 구현 없음, 의도적 실패")
+    assert solve_blanks(puzzle_grid)[0] == (1, 2, 11)

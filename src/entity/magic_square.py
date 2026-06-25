@@ -47,7 +47,7 @@ def solve_blanks(grid: list[list[int]]) -> list[tuple[int, int, int]]:
                 v = magic - sum(working[r][j] for j in range(len(working)) if j != c)
                 working[r][c] = v
                 result.append((r, c, v))
-                filled = True
+                filled = True  # AC-3
         if not filled:
             for c in range(len(working)):
                 zeros = [r for r in range(len(working)) if working[r][c] == 0]
