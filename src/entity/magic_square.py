@@ -10,6 +10,12 @@ def validate_cell_values(grid: list[list[int]]) -> None:
                 raise ValueError("cell values must be 0 or 1-16")  # E-3
 
 
+def validate_no_duplicate_nonzero(grid: list[list[int]]) -> None:
+    filled = [v for row in grid for v in row if v != 0]
+    if len(filled) != len(set(filled)):
+        raise ValueError("duplicate non-zero values")  # E-4
+
+
 def validate_grid_shape(grid) -> None:
     if grid is None:
         raise ValueError("grid must be 4x4")  # E-1
