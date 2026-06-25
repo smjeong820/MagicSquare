@@ -37,3 +37,12 @@ def test_u_in_03_parse_grid_rejects_out_of_range_values():
     for raw in (with_neg, with_17):
         with pytest.raises(ValueError):
             parse_grid(raw)
+
+
+@pytest.mark.boundary
+def test_u_in_04_parse_grid_rejects_duplicate_nonzero():
+    # Given: 0 제외 중복 값(8)이 있는 4×4 격자 (0 두 개)
+    dup = [[16, 3, 2, 13], [5, 10, 0, 8], [9, 6, 7, 12], [4, 0, 14, 8]]
+    # When / Then: parse_grid → ValueError (E-4)
+    with pytest.raises(ValueError):
+        parse_grid(dup)
