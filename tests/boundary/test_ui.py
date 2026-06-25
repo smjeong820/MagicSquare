@@ -46,3 +46,11 @@ def test_u_in_04_parse_grid_rejects_duplicate_nonzero():
     # When / Then: parse_grid → ValueError (E-4)
     with pytest.raises(ValueError):
         parse_grid(dup)
+
+
+@pytest.mark.boundary
+def test_u_in_05_is_valid_candidate_rejects_row_sum_violation(puzzle_grid):
+    # Given: 행 합 위반 후보 값
+    # When: is_valid_candidate 호출
+    # Then: False (E-5)
+    pytest.fail("RED: U-IN-05 — 구현 없음, 의도적 실패")
