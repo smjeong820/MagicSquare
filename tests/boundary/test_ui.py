@@ -1,7 +1,8 @@
 import pytest
 
-from src.boundary.ui import format_blanks, is_valid_candidate, parse_grid
+from src.boundary.ui import format_blanks, is_valid_candidate, parse_grid, solve_puzzle_output
 from src.entity.magic_square import solve_blanks
+from tests._approval import assert_matches_golden
 
 
 @pytest.mark.boundary
@@ -70,4 +71,5 @@ def test_t1_solve_blanks_puzzle_golden(puzzle_grid):
     # Given: SSOT 퍼즐 격자
     # When: solve_puzzle_output 호출
     # Then: Golden Master 스냅샷 일치
-    pytest.fail("RED: T1 — 구현 없음, 의도적 실패")
+    output = solve_puzzle_output(puzzle_grid)
+    assert_matches_golden(output, "t1_solve_blanks_puzzle.approved.txt")
