@@ -101,3 +101,68 @@ def solve_blanks(grid: list[list[int]]) -> list[tuple[int, int, int]]:
         if not filled:
             break
     return result  # AC-1
+
+
+# SSOT: tests/conftest.py COMPLETE_GRID
+_COMPLETE_GRID = [
+    [16, 3, 2, 13],
+    [5, 10, 11, 8],
+    [9, 6, 7, 12],
+    [4, 15, 14, 1],
+]
+
+# SSOT: tests/conftest.py PUZZLE_GRID — generate 실패 시 폴백
+_PUZZLE_FALLBACK = [
+    [16, 3, 2, 13],
+    [5, 10, 0, 8],
+    [9, 6, 7, 12],
+    [4, 0, 14, 1],
+]
+
+
+def _permute_rows_cols(grid: list[list[int]], rng) -> list[list[int]]:
+    rows = list(range(4))
+    cols = list(range(4))
+    rng.shuffle(rows)
+    rng.shuffle(cols)
+    return [[grid[r][c] for c in cols] for r in rows]
+
+
+def _mask_cells(complete: list[list[int]], cells: list[tuple[int, int]]) -> list[list[int]]:
+    puzzle = [row[:] for row in complete]
+    for r, c in cells:
+        puzzle[r][c] = 0
+    return puzzle
+
+
+def is_valid_puzzle(puzzle: list[list[int]]) -> bool:
+    if count_zeros(puzzle) != 2:
+        return False
+    if not has_single_zero_row_or_col(puzzle):
+        return False
+    pairs = solve_blanks(puzzle)
+    if len(pairs) != 2:
+        return False
+    completed = filled_grid(puzzle, pairs)
+    target = magic_constant(4)
+    return (
+        all_rows_sum_to(completed, target)
+        and all_cols_sum_to(completed, target)
+        and diagonals_sum_to(completed, target)
+        and values_valid(completed)
+    )
+
+
+def generate_puzzle(rng=None) -> list[list[int]]:
+    import random
+
+    rng = rng or random.Random()
+    complete = _permute_rows_cols(_COMPLETE_GRID, rng)
+    positions = [(r, c) for r in range(4) for c in range(4)]
+    rng.shuffle(positions)
+    for i in range(len(positions)):
+        for j in range(i + 1, len(positions)):
+            candidate = _mask_cells(complete, [positions[i], positions[j]])
+            if is_valid_puzzle(candidate):
+                return candidate
+    return [row[:] for row in _PUZZLE_FALLBACK]

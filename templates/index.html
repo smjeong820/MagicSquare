@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4×4 마방진</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f4f6f8;
+      color: #1a1a1a;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    main {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      padding: 2rem;
+      max-width: 420px;
+      width: 100%;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .5rem;
+      gap: 1rem;
+    }
+    h1 {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+    .timer {
+      font-size: 1rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: #3b6fd9;
+      min-width: 4.5rem;
+      text-align: right;
+    }
+    .timer.done { color: #1a6b3c; }
+    p.hint {
+      text-align: center;
+      color: #666;
+      font-size: .875rem;
+      margin: 0 0 1.5rem;
+    }
+    .idle-box {
+      text-align: center;
+      padding: 2rem 0;
+      color: #888;
+      font-size: .95rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+    .cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .grid input.blank {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border: 2px solid #e8a0a0;
+      border-radius: 8px;
+      padding: 0;
+      background: #fff5f5;
+      color: #8b2e2e;
+    }
+    .grid input.blank:focus {
+      outline: none;
+      border-color: #d46464;
+      background: #ffeeee;
+    }
+    .grid input.blank::placeholder { color: #d4a0a0; }
+    .grid .fixed {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+      font-weight: 500;
+      background: #f0f2f5;
+      border: 2px solid #dde2e8;
+      border-radius: 8px;
+      color: #444;
+      user-select: none;
+    }
+    button {
+      width: 100%;
+      padding: .875rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: #3b6fd9;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #2f5bb8; }
+    .actions {
+      display: flex;
+      gap: .5rem;
+    }
+    .actions button { flex: 1; }
+    button.secondary {
+      background: #fff;
+      color: #666;
+      border: 2px solid #dde2e8;
+    }
+    button.secondary:hover {
+      background: #f4f6f8;
+      border-color: #c8cfd8;
+    }
+    .result {
+      margin-top: 1.25rem;
+      text-align: center;
+      font-size: 1.125rem;
+      min-height: 1.5rem;
+    }
+    .result.ok { color: #1a6b3c; font-weight: 700; }
+    .result.err { color: #c0392b; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="top-bar">
+      <h1>4×4 마방진</h1>
+      {% if phase == 'playing' or phase == 'solved' %}
+        <div class="timer {% if phase == 'solved' %}done{% endif %}" id="timer">0.0s</div>
+      {% endif %}
+    </div>
+
+    {% if phase == 'idle' %}
+      <p class="hint">{% if stopped %}게임이 중지되었습니다 · {% endif %}Start를 눌러 문제를 시작하세요</p>
+      <div class="idle-box">문제가 준비되었습니다</div>
+      <form method="post" action="/start">
+        <button type="submit">Start</button>
+      </form>
+    {% elif phase == 'solved' %}
+      <p class="hint">다음 문제를 준비했습니다</p>
+      <div class="idle-box">Start를 눌러 계속하세요</div>
+      <form method="post" action="/start">
+        <button type="submit">Start</button>
+      </form>
+      <div class="result ok">정답입니다</div>
+    {% else %}
+      <p class="hint">붉은 칸만 입력하세요 · 마법상수 34</p>
+      <form method="post" action="/solve">
+        <div class="grid">
+          {% for r in range(4) %}
+            {% for c in range(4) %}
+              <div class="cell">
+                {% if (r, c) in blanks %}
+                  <input
+                    type="number"
+                    name="cell_{{ r }}_{{ c }}"
+                    value="{{ grid[r][c] if grid[r][c] != 0 else '' }}"
+                    min="1"
+                    max="16"
+                    class="blank"
+                    placeholder="?"
+                    inputmode="numeric"
+                    autofocus
+                  >
+                {% else %}
+                  <span class="fixed">{{ puzzle[r][c] }}</span>
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+        <div class="actions">
+          <button type="submit">확인</button>
+          <button type="submit" class="secondary" formaction="/stop" formmethod="post">게임 중지</button>
+        </div>
+      </form>
+      {% if error %}
+        <div class="result err">{{ error }}</div>
+      {% endif %}
+    {% endif %}
+  </main>
+
+  {% if start_time_ms is not none or elapsed_ms is not none %}
+  <script>
+    (function () {
+      const el = document.getElementById("timer");
+      if (!el) return;
+      const startMs = {{ start_time_ms if start_time_ms is not none else 'null' }};
+      const frozenMs = {{ elapsed_ms if elapsed_ms is not none else 'null' }};
+
+      function format(ms) {
+        return (ms / 1000).toFixed(1) + "s";
+      }
+
+      function tick() {
+        if (frozenMs !== null) {
+          el.textContent = format(frozenMs);
+          return;
+        }
+        if (startMs === null) return;
+        el.textContent = format(Date.now() - startMs);
+      }
+
+      tick();
+      if (frozenMs === null && startMs !== null) {
+        setInterval(tick, 100);
+      }
+    })();
+  </script>
+  {% endif %}
+</body>
+</html>
