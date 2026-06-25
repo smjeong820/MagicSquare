@@ -30,6 +30,13 @@ def has_single_zero_row_or_col(grid: list[list[int]]) -> bool:
     return any(c == 1 for c in row_counts) or any(c == 1 for c in col_counts)  # INV-7
 
 
+def filled_grid(grid: list[list[int]], pairs: list[tuple[int, int, int]]) -> list[list[int]]:
+    result = [row[:] for row in grid]
+    for r, c, v in pairs:
+        result[r][c] = v
+    return result  # AC-2
+
+
 def count_zeros(grid: list[list[int]]) -> int:
     return sum(cell == 0 for row in grid for cell in row)  # INV-6
 

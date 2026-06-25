@@ -5,6 +5,7 @@ from src.entity.magic_square import (
     all_rows_sum_to,
     count_zeros,
     diagonals_sum_to,
+    filled_grid,
     has_single_zero_row_or_col,
     magic_constant,
     solve_blanks,
@@ -92,7 +93,12 @@ def test_d_msq_10_solved_grid_satisfies_inv_2_through_5(puzzle_grid):
     # Given: 퍼즐 격자, solve_blanks 결과
     # When:  빈 칸을 채운 완성 격자에 INV-2~5 검증
     # Then:  유일해 — 모든 불변식 통과
-    pytest.fail("RED: D-MSQ-10 — 구현 없음, 의도적 실패")
+    target = magic_constant(4)
+    filled = filled_grid(puzzle_grid, solve_blanks(puzzle_grid))
+    assert all_rows_sum_to(filled, target)
+    assert all_cols_sum_to(filled, target)
+    assert diagonals_sum_to(filled, target)
+    assert values_valid(filled)
 
 
 @pytest.mark.entity
