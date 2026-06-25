@@ -19,6 +19,10 @@ def test_u_in_01_parse_grid_rejects_invalid_shape():
 @pytest.mark.boundary
 def test_u_in_02_parse_grid_rejects_wrong_zero_count():
     # Given: 0 개수가 2가 아닌 4×4 격자
-    # When: parse_grid 호출
-    # Then: ValueError 거부 (E-2)
-    pytest.fail("RED: U-IN-02 — 구현 없음, 의도적 실패")
+    no_zeros = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+    one_zero = [[0, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+    three_zeros = [[0, 0, 3, 4], [5, 0, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+    # When / Then: parse_grid → ValueError (E-2)
+    for raw in (no_zeros, one_zero, three_zeros):
+        with pytest.raises(ValueError):
+            parse_grid(raw)

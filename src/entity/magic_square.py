@@ -1,3 +1,8 @@
+def validate_zero_count(grid: list[list[int]]) -> None:
+    if count_zeros(grid) != 2:
+        raise ValueError("grid must have exactly 2 zeros")  # E-2
+
+
 def validate_grid_shape(grid) -> None:
     if grid is None:
         raise ValueError("grid must be 4x4")  # E-1
