@@ -63,6 +63,14 @@ def test_d_msq_06_count_zeros_is_2(puzzle_grid):
 
 
 @pytest.mark.entity
+def test_d_msq_07_has_single_zero_row_or_col(puzzle_grid):
+    # Given: 빈 칸 2개인 4×4 퍼즐 격자
+    # When:  has_single_zero_row_or_col(puzzle_grid) 호출
+    # Then:  행 또는 열 중 적어도 하나는 0이 1개뿐
+    pytest.fail("RED: D-MSQ-07 — 구현 없음, 의도적 실패")
+
+
+@pytest.mark.entity
 def test_d_msq_08_solve_blanks_returns_two_pairs(puzzle_grid):
     # Given: 빈 칸 2개인 4×4 퍼즐 격자 (SSOT)
     # When:  solve_blanks(puzzle_grid) 호출
