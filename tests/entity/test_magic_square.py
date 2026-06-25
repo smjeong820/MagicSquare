@@ -1,6 +1,6 @@
 import pytest
 
-from src.entity.magic_square import count_zeros, magic_constant, solve_blanks
+from src.entity.magic_square import all_rows_sum_to, count_zeros, magic_constant, solve_blanks
 from tests._approval import assert_matches_golden
 
 
@@ -19,7 +19,7 @@ def test_d_msq_02_all_rows_sum_to_complete_grid(complete_grid):
     # Given: 완성 4×4 마방진 격자, target=34
     # When:  all_rows_sum_to(complete_grid, 34) 호출
     # Then:  모든 행 합 == 34
-    pytest.fail("RED: D-MSQ-02 — 구현 없음, 의도적 실패")
+    assert all_rows_sum_to(complete_grid, 34)
 
 
 @pytest.mark.entity

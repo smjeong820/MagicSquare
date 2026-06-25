@@ -2,6 +2,10 @@ def magic_constant(n: int) -> int:
     return n * (n * n + 1) // 2  # INV-1
 
 
+def all_rows_sum_to(grid: list[list[int]], target: int) -> bool:
+    return all(sum(row) == target for row in grid)  # INV-2
+
+
 def count_zeros(grid: list[list[int]]) -> int:
     return sum(cell == 0 for row in grid for cell in row)  # INV-6
 
