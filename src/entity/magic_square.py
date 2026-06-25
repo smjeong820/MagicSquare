@@ -11,6 +11,13 @@ def all_cols_sum_to(grid: list[list[int]], target: int) -> bool:
     return all(sum(grid[r][c] for r in range(n)) == target for c in range(n))  # INV-3
 
 
+def diagonals_sum_to(grid: list[list[int]], target: int) -> bool:
+    n = len(grid)
+    main = sum(grid[i][i] for i in range(n))
+    anti = sum(grid[i][n - 1 - i] for i in range(n))
+    return main == target and anti == target  # INV-4
+
+
 def count_zeros(grid: list[list[int]]) -> int:
     return sum(cell == 0 for row in grid for cell in row)  # INV-6
 
