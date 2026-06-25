@@ -53,3 +53,11 @@ def test_u_in_05_is_valid_candidate_rejects_row_sum_violation(puzzle_grid):
     # Given: (1,2) 빈 칸에 행 합 위반 후보 10 (정답 11)
     # When / Then: is_valid_candidate → False (E-5)
     assert is_valid_candidate(puzzle_grid, 1, 2, 10) is False
+
+
+@pytest.mark.boundary
+def test_u_in_06_format_blanks_returns_values_only(puzzle_grid):
+    # Given: SSOT 퍼즐 격자
+    # When: format_blanks 호출
+    # Then: "11, 15" — 숫자만, 해설 없음 (AC-5)
+    pytest.fail("RED: U-IN-06 — 구현 없음, 의도적 실패")
