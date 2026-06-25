@@ -85,3 +85,19 @@ def test_d_msq_09_solve_blanks_first_pair_from_single_zero_row(puzzle_grid):
     # When:  solve_blanks(puzzle_grid) 호출
     # Then:  첫 쌍 == (1, 2, 11) — 행 우선 1칸 확정
     assert solve_blanks(puzzle_grid)[0] == (1, 2, 11)
+
+
+@pytest.mark.entity
+def test_d_msq_10_solved_grid_satisfies_inv_2_through_5(puzzle_grid):
+    # Given: 퍼즐 격자, solve_blanks 결과
+    # When:  빈 칸을 채운 완성 격자에 INV-2~5 검증
+    # Then:  유일해 — 모든 불변식 통과
+    pytest.fail("RED: D-MSQ-10 — 구현 없음, 의도적 실패")
+
+
+@pytest.mark.entity
+def test_d_msq_11_row_priority_when_row_and_col_both_single_zero():
+    # Given: 행·열 모두 단일 0인 교차 빈 칸 퍼즐
+    # When:  solve_blanks 호출
+    # Then:  행 우선 — 첫 쌍 == (1, 2, 11)
+    pytest.fail("RED: D-MSQ-11 — 구현 없음, 의도적 실패")
