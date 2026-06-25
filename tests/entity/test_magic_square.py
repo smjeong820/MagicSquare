@@ -7,6 +7,7 @@ from src.entity.magic_square import (
     diagonals_sum_to,
     magic_constant,
     solve_blanks,
+    values_valid,
 )
 from tests._approval import assert_matches_golden
 
@@ -50,7 +51,7 @@ def test_d_msq_05_values_valid_complete_grid(complete_grid):
     # Given: 완성 4×4 마방진 격자
     # When:  values_valid(complete_grid) 호출
     # Then:  1~16 중복 없음
-    pytest.fail("RED: D-MSQ-05 — 구현 없음, 의도적 실패")
+    assert values_valid(complete_grid)
 
 
 @pytest.mark.entity

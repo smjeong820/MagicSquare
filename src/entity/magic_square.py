@@ -18,6 +18,11 @@ def diagonals_sum_to(grid: list[list[int]], target: int) -> bool:
     return main == target and anti == target  # INV-4
 
 
+def values_valid(grid: list[list[int]]) -> bool:
+    filled = [v for row in grid for v in row if v != 0]
+    return all(1 <= v <= 16 for v in filled) and len(filled) == len(set(filled))  # INV-5
+
+
 def count_zeros(grid: list[list[int]]) -> int:
     return sum(cell == 0 for row in grid for cell in row)  # INV-6
 
