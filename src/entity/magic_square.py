@@ -16,6 +16,12 @@ def validate_no_duplicate_nonzero(grid: list[list[int]]) -> None:
         raise ValueError("duplicate non-zero values")  # E-4
 
 
+def is_valid_candidate(grid: list[list[int]], row: int, col: int, value: int) -> bool:
+    target = magic_constant(len(grid))
+    row_sum = sum(value if c == col else grid[row][c] for c in range(len(grid)))
+    return row_sum == target  # E-5
+
+
 def validate_grid_shape(grid) -> None:
     if grid is None:
         raise ValueError("grid must be 4x4")  # E-1

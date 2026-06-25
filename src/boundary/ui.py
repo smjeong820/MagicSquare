@@ -1,4 +1,5 @@
 from src.entity.magic_square import (
+    is_valid_candidate,
     validate_cell_values,
     validate_grid_shape,
     validate_no_duplicate_nonzero,
