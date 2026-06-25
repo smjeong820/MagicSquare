@@ -1,6 +1,6 @@
 import pytest
 
-from src.entity.magic_square import count_zeros, magic_constant
+from src.entity.magic_square import count_zeros, magic_constant, solve_blanks
 from tests._approval import assert_matches_golden
 
 
@@ -27,4 +27,4 @@ def test_d_msq_08_solve_blanks_returns_two_pairs(puzzle_grid):
     # Given: 빈 칸 2개인 4×4 퍼즐 격자 (SSOT)
     # When:  solve_blanks(puzzle_grid) 호출
     # Then:  (행, 열, 값) 2쌍 — (1,2,11), (3,1,15)
-    pytest.fail("RED: D-MSQ-08 — 구현 없음, 의도적 실패")
+    assert solve_blanks(puzzle_grid) == [(1, 2, 11), (3, 1, 15)]
