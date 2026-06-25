@@ -1,3 +1,13 @@
+def validate_grid_shape(grid) -> None:
+    if grid is None:
+        raise ValueError("grid must be 4x4")  # E-1
+    if not isinstance(grid, list) or len(grid) != 4:
+        raise ValueError("grid must be 4x4")  # E-1
+    for row in grid:
+        if not isinstance(row, list) or len(row) != 4:
+            raise ValueError("grid must be 4x4")  # E-1
+
+
 def magic_constant(n: int) -> int:
     return n * (n * n + 1) // 2  # INV-1
 
