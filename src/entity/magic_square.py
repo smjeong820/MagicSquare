@@ -23,6 +23,13 @@ def values_valid(grid: list[list[int]]) -> bool:
     return all(1 <= v <= 16 for v in filled) and len(filled) == len(set(filled))  # INV-5
 
 
+def has_single_zero_row_or_col(grid: list[list[int]]) -> bool:
+    n = len(grid)
+    row_counts = [sum(cell == 0 for cell in row) for row in grid]
+    col_counts = [sum(grid[r][c] == 0 for r in range(n)) for c in range(n)]
+    return any(c == 1 for c in row_counts) or any(c == 1 for c in col_counts)  # INV-7
+
+
 def count_zeros(grid: list[list[int]]) -> int:
     return sum(cell == 0 for row in grid for cell in row)  # INV-6
 
