@@ -1,6 +1,7 @@
 import pytest
 
-from src.boundary.ui import is_valid_candidate, parse_grid
+from src.boundary.ui import format_blanks, is_valid_candidate, parse_grid
+from src.entity.magic_square import solve_blanks
 
 
 @pytest.mark.boundary
@@ -58,6 +59,7 @@ def test_u_in_05_is_valid_candidate_rejects_row_sum_violation(puzzle_grid):
 @pytest.mark.boundary
 def test_u_in_06_format_blanks_returns_values_only(puzzle_grid):
     # Given: SSOT 퍼즐 격자
-    # When: format_blanks 호출
+    # When: solve_blanks → format_blanks
     # Then: "11, 15" — 숫자만, 해설 없음 (AC-5)
-    pytest.fail("RED: U-IN-06 — 구현 없음, 의도적 실패")
+    pairs = solve_blanks(puzzle_grid)
+    assert format_blanks(pairs) == "11, 15"

@@ -14,3 +14,7 @@ def parse_grid(raw) -> list[list[int]]:
     validate_cell_values(grid)  # E-3
     validate_no_duplicate_nonzero(grid)  # E-4
     return grid
+
+
+def format_blanks(pairs: list[tuple[int, int, int]]) -> str:
+    return ", ".join(str(v) for _, _, v in pairs)  # AC-5
