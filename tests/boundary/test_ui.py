@@ -63,3 +63,11 @@ def test_u_in_06_format_blanks_returns_values_only(puzzle_grid):
     # Then: "11, 15" — 숫자만, 해설 없음 (AC-5)
     pairs = solve_blanks(puzzle_grid)
     assert format_blanks(pairs) == "11, 15"
+
+
+@pytest.mark.boundary
+def test_t1_solve_blanks_puzzle_golden(puzzle_grid):
+    # Given: SSOT 퍼즐 격자
+    # When: solve_puzzle_output 호출
+    # Then: Golden Master 스냅샷 일치
+    pytest.fail("RED: T1 — 구현 없음, 의도적 실패")
